@@ -19,6 +19,7 @@
             <div class="col-md-8">
               <div class="card-body">
                 <h5 class="card-title">{{$project['name']}}</h5>
+                <p><span class="fw-bold">Type:</span> @if($project->type) {{$project->type->name}}@else // @endif</p>
                 <p class="card-text">{{$project['description']}}</p>
                 <a class="card-text">{{$project['url']}}</a>
                 <p class="card-text"><small class="text-body-secondary">{{$project['publication_time']->format("d/m/Y")}}</small></p>

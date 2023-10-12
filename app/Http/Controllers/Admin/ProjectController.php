@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use App\Models\Type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -23,8 +24,9 @@ class ProjectController extends Controller
      * CREATE
      */
     public function create()
-    {
-        return view("admin.projects.create");
+    {   $project = Project::all();
+        $types = Type::all();
+        return view("admin.projects.create", ["types" => $types, "project" => $project]);
     }
 
     /**
@@ -35,7 +37,8 @@ class ProjectController extends Controller
         $data = $request->validate([
             "name"=>"required|string",
             //<1mb
-            "image"=>"required|image|mimes:jpeg,png,jpg|max:1024",
+            "image"=>"required|image|mimes:jpeg,png,jpg|max:5120",
+            "type_id" => "exists:types,id",
             "url"=>"required|string",
             "description"=>"required|string",
             "publication_time"=>"required|date",
@@ -56,8 +59,7 @@ class ProjectController extends Controller
      * SHOW
      */
     public function show($slug) {
-        $project = Project::where("slug", $slug)->first(); 
-
+        $project = Project::where("slug", $slug)->first();  
         return view("admin.projects.show", ["project"=>$project]);
     }
 
@@ -67,7 +69,8 @@ class ProjectController extends Controller
     public function edit($slug)
     {
         $project = Project::where("slug", $slug)->first();
-        return view('admin.projects.edit', ["project"=> $project]);
+        $types = Type::all();
+        return view('admin.projects.edit', ["project"=> $project, "types" => $types]);
     }
 
     /**
@@ -80,6 +83,7 @@ class ProjectController extends Controller
             "name"=>"required|string",
             //<1mb
             "image"=>"required|image|mimes:jpeg,png,jpg|max:5120",
+            "type_id" => "exists:types,id",
             "url"=>"required|string",
             "description"=>"required|string",
             "publication_time"=>"required|date",

@@ -18,10 +18,15 @@ class Project extends Model
 
     protected $fillable = [ 
         "slug",
+        "type_id",
         "name",
         "image",
         "url",
         "description",
         "publication_time",
     ];
+
+    public function type(){
+        return $this->belongsTo(Type::class);
+    }
 }
