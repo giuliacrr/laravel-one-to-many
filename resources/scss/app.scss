@@ -1,0 +1,11 @@
+@use "bootstrap";
+@use "@fortawesome/fontawesome-free/css/all.min.css";
+
+.add-btn {
+    border-radius: 50%;
+    padding: 15px 20px;
+}
+
+.date-row {
+    max-width: 300px;
+}
